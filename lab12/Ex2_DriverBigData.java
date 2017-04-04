@@ -1,10 +1,9 @@
-package it.polito.bigdata.hadoop.lab;
+package it.polito.bigdata.hadoop.exercise1;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -23,27 +22,23 @@ public class DriverBigData extends Configured implements Tool {
   @Override
   public int run(String[] args) throws Exception {
 
+    Path inputPath;
+    Path outputDir;
+    int numberOfReducers;
 	int exitCode;  
 	
+	// Parse the parameters
+    numberOfReducers = Integer.parseInt(args[0]);
+    inputPath = new Path(args[1]);
+    outputDir = new Path(args[2]);
+    
     Configuration conf = this.getConf();
 
     // Define a new job
     Job job = Job.getInstance(conf); 
 
     // Assign a name to the job
-    job.setJobName("Lab - Skeleton");
- 
- /* Change the following part of the code */
-
-    Path inputPath;
-    Path outputDir;
-   // int numberOfReducers;
-
-	
-	// Parse the parameters
-    // numberOfReducers = Integer.parseInt(args[0]);
-    inputPath = new Path(args[0]);
-    outputDir = new Path(args[1]);
+    job.setJobName("Exercise #1 - WordCounter");
     
     // Set path of the input file/folder (if it is a folder, the job reads all the files in the specified folder) for this job
     FileInputFormat.addInputPath(job, inputPath);
@@ -66,11 +61,18 @@ public class DriverBigData extends Configured implements Tool {
     // Set map output key and value classes
     job.setMapOutputKeyClass(Text.class);
     job.setMapOutputValueClass(IntWritable.class);
+    
+    // Set reduce class
+    job.setReducerClass(ReducerBigData.class);
+        
+    // Set reduce output key and value classes
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
 
     // Set number of reducers
-    job.setNumReduceTasks(0);
+    job.setNumReduceTasks(numberOfReducers);
     
-     
+    
     // Execute the job and wait for completion
     if (job.waitForCompletion(true)==true)
     	exitCode=0;
@@ -78,8 +80,6 @@ public class DriverBigData extends Configured implements Tool {
     	exitCode=1;
     	
     return exitCode;
-    
-    
   }
   
 

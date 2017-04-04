@@ -1,32 +1,39 @@
-package it.polito.bigdata.hadoop.lab;
+package it.polito.bigdata.hadoop.exercise1;
 
 import java.io.IOException;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 /**
- * Lab  - Mapper
+ * Exercise 1 - Mapper
  */
-
-/* Set the proper data types for the (key,value) pairs */
 class MapperBigData extends Mapper<
-                    Text, // Input key type
-                    IntWritable,         // Input value type
-                    Text,           // Output key type
+                    LongWritable, // Input key type
+                    Text,         // Input value type
+                    Text,         // Output key type
                     IntWritable> {// Output value type
     
     protected void map(
-            Text key,   // Input key type
-            IntWritable value,         // Input value type
+            LongWritable key,   // Input key type // should be this type 
+      /* The key class of a mapper that maps text files is always LongWritable. 
+That is because it contains the byte offset of the current line and this could easily overflow an integer.*/
+            Text value,         // Input value type
             Context context) throws IOException, InterruptedException {
 
-    		/* Implement the map method */ 
-    		if (key.toString().substring(0, 1).equals("ho")) {
-    			context.write(key, value);
-    		}
+            // Split each sentence in words. Use whitespace(s) as delimiter (=a space, a tab, a line break, or a form feed)
+    		// The split method returns an array of strings
+            String[] words = value.toString().split("\\s+");
+            
+            // Iterate over the set of words
+            for(String word : words) {
+            	// Transform word case
+                String cleanedWord = word.toLowerCase();
+                
+                // emit the pair (word, 1)
+                context.write(new Text(cleanedWord), new IntWritable(1));
+            }
     }
 }

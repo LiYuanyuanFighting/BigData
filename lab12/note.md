@@ -1,5 +1,6 @@
-When I run lab2 with parameter passed through command line, I always had NullPointerException, after  
+1)When I run lab2 with parameter passed through command line, I always had NullPointerException, after  
 asking professor, got the reason:  
+
 In configuration, I first wrote:  
 'Job job = Job.getInstance(conf)'   
 then   
@@ -7,14 +8,17 @@ conf.set("BeginWord", args[2]); // To set parameter
 Obviously, it is too late to set parameter at that time, because the job has already used  
 the old conf...  
 
-I always have the problem with connecting to the gateway through FileZilla:  
+
+2)I always have the problem with connecting to the gateway through FileZilla:  
+
 host: sftp://localhost
 Username: root  Password: root Port:2122  
 So have to use the command:
 scp -P 2122 document.txt root@localhost  
 Then transfered the file document.txt to docker
 
-**questions from lab2** 
+
+3)questions from lab2
 
 What is the size of your input dataset, compared to the simple word counts (1­grams)? Did 
 you need the cluster to filter the 1­grams? What about the 2­grams (or the n­grams for the n 
@@ -25,9 +29,9 @@ is a special type of computational cluster designed specifically for storing and
 amounts of unstructured data in a distributed computing environment.)  
 So for small amount data to process, there is no need to use the cluster. For 1-grams, probably,  
 no need of cluster, for 2-grams, 3,...n, may need.
---
 
-To match the first several characters can use:
+
+4)To match the first several characters can use:
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;

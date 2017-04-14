@@ -1,3 +1,19 @@
+When I run lab2 with parameter passed through command line, I always had NullPointerException, after  
+asking professor, got the reason:  
+In configuration, I first wrote:  
+'Job job = Job.getInstance(conf)'   
+then   
+conf.set("BeginWord", args[2]); // To set parameter  
+Obviously, it is too late to set parameter at that time, because the job has already used  
+the old conf...  
+
+I always have the problem with connecting to the gateway through FileZilla:  
+host: sftp://localhost
+Username: root  Password: root Port:2122  
+So have to use the command:
+scp -P 2122 document.txt root@localhost  
+Then transfered the file document.txt to docker
+
 To match the first several characters can use:
 
 

@@ -15,4 +15,5 @@ The underlying conceptual problem is that Hadoop does not know how to serialize 
 
 So what you want to do is implement Writable and add serialization routines in your custom data type.
  
- 
+In the self defined classes: TopKVector doesn't implement Writable, so hadoop does not know how to serialize the data, but  
+class WordCountWritable implements Writable.

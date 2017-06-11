@@ -30,7 +30,7 @@ Confusion matrix:
 0.0  56904.0  
 Precision = 0.6328995662328996 
 
-Professor's
+Professor's (the precision is higher cz used more features)
 s231681@bigdatalab:~$ spark-submit --class it.polito.bigdata.spark.example.SparkDriver --deploy-mode client --master yarn Exercise8PL.jar /data/students/bigdata-01QYD/Lab3/Reviews.csv 
 +--------------------+-----+
 |            features|label|
